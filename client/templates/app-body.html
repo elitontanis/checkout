@@ -1,0 +1,28 @@
+<template name="appBody">
+  <div id="container" class="{{menuOpen}} {{cordova}}">
+
+    <section id="menu">
+      <div class="list-people">
+        <a class="js-new-list link-list-new"><span class="icon-plus"></span>New Place</a>
+
+        {{#each lists}}
+          <a href="{{pathFor 'listsShow'}}" class="list-person {{activeListClass}}" title="{{name}}">
+            {{#if incompleteCount}}
+              <span class="count-list">{{incompleteCount}}</span>
+            {{/if}}
+            {{name}}
+          </a>
+        {{/each}}
+
+      </div>
+    </section>
+
+    <div class="content-overlay"></div>
+
+    <div id="content-container">
+      {{#each thisArray}}
+        {{> yield}}
+      {{/each}}
+    </div>
+  </div>
+</template>

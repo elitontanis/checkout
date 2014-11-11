@@ -3,6 +3,7 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
-autopublish
+standard-app-packages
 insecure
+less
+iron:router@0.9.4
