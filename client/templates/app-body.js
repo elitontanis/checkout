@@ -64,6 +64,10 @@ Template.appBody.helpers({
   cordova: function() {
     return Meteor.isCordova && 'cordova';
   },
+  emailLocalPart: function() {
+    var email = Meteor.user().emails[0].address;
+    return email.substring(0, email.indexOf('@'));
+  },
   userMenuOpen: function() {
     return Session.get(USER_MENU_KEY);
   },
@@ -74,6 +78,13 @@ Template.appBody.helpers({
     var current = Router.current();
     if (current.route.name === 'listsShow' && current.params._id === this._id) {
       return 'active';
+    }
+  },
+  connected: function() {
+    if (Session.get(SHOW_CONNECTION_ISSUE_KEY)) {
+      return Meteor.status().connected;
+    } else {
+      return true;
     }
   }
 });
@@ -96,6 +107,16 @@ Template.appBody.events({
 
   'click #menu a': function() {
     Session.set(MENU_KEY, false);
+  },
+
+  'click .js-logout': function() {
+    Meteor.logout();
+
+    // if we are on a private list, we'll need to go to a public one
+    var current = Router.current();
+    if (current.route.name === 'listsShow' && current.data().userId) {
+      Router.go('listsShow', Lists.findOne({userId: {$exists: false}}));
+    }
   },
 
   'click .js-new-list': function() {
