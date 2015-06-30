@@ -85,6 +85,11 @@ input:-webkit-autofill {
     left: 1em;
   }
 
+  [class^="addon-"],
+  [class*=" addon-"] {
+    right: 1em;
+  }
+
   input { padding-left: 3em; }
 
   // Styling
@@ -97,6 +102,19 @@ input:-webkit-autofill {
         color: @color-primary;
       }
     }
+  }
+
+  [class^="addon-"],
+  [class*=" addon-"] {
+    .transition( all 300ms ease-in );
+    .transform(translate3d(-90px,-50%,0));
+    background: transparent;
+    color: @color-medium;
+    font-size: 1em;
+    height: 1em;
+    position: absolute;
+    top: 50%;
+    width: 1em;
   }
 
   [class^="icon-"],
