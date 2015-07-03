@@ -144,11 +144,15 @@ Template.listsShow.events({
     if (! $input.val())
       return;
 
+    var email = Meteor.user().emails[0].address;
+
     People.insert({
       listId: this._id,
       text: $input.val(),
       checked: false,
-      createdAt: new Date()
+      createdAt: new Date(),
+      owner: Meteor.userId(),
+      username: email.substring(0, email.indexOf('@'))
     });
     Lists.update(this._id, {$inc: {incompleteCount: 1}});
     $input.val('');
